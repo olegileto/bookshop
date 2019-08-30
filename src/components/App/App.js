@@ -6,13 +6,17 @@ import './App.css';
 import withBookStoreService from '../hoc/withBookStoreService';
 import {HomePage} from "../pages/HomePage";
 import {CartPage} from "../pages/CartPage";
+import ShopHeader from "../ShopHeader/ShopHeader";
 
 const App = ({bookStoreService}) => {
     return (
-        <Switch>
-            <Route path='/' component={HomePage} exact/>
-            <Route path='/cart' component={CartPage}/>
-        </Switch>
+        <main role='main' className='container'>
+            <ShopHeader numItems={5} total={210}/>
+            <Switch>
+                <Route path='/' component={HomePage} exact/>
+                <Route path='/cart' component={CartPage}/>
+            </Switch>
+        </main>
     )
 };
 export default withBookStoreService()(App);
