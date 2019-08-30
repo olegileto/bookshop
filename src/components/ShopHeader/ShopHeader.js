@@ -1,32 +1,33 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 const ShopHeader = ({numItems, total}) => {
     return (
         <header className='shop-header'>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-                <a className="navbar-brand" href="#">BookShop</a>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-primary container">
+                <Link to='/' className="navbar-brand" >BookShop</Link>
 
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                            <Link to='/' className="nav-link">Home <span className="sr-only">(current)</span></Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Cart</a>
+                            <Link to='/cart' className="nav-link">Cart</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Books</a>
+                            <Link to='/books' className="nav-link">Books</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">About</a>
+                            <Link to='/about' className="nav-link" >About</Link>
                         </li>
                     </ul>
                 </div>
-                <a>
+                <Link to='/cart' className='cart-title'>
                     <i className='cart-icon fa fa-shopping-cart'/>
                     {numItems} items (${total})
-                </a>
+                </Link>
             </nav>
         </header>
     )

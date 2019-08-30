@@ -4,22 +4,26 @@ import {bindActionCreators} from "redux";
 
 import BookListItem from "../BookListItem/BookListItem";
 import withBookStoreService from '../hoc/withBookStoreService';
-import {booksLoaded} from "../../actions";
+import {booksLoaded, booksRequested} from "../../actions";
 import compose from "../../utils/compose";
+import Spinner from "../Spinner/Spinner";
 
 class BookList extends Component {
 
     componentDidMount() {
-        // 1. receive data
-        const {bookStoreService} = this.props;
-        const data = bookStoreService.getBooks();
 
-        // 2. dispatch action to store
-        this.props.booksLoaded(data);
+        const {bookStoreService, booksLoaded, booksRequested} = this.props;
+        booksRequested();
+        bookStoreService.getBooks()
+            .then((data) => booksLoaded(data));
     }
 
     render() {
-        const {books} = this.props;
+        const {books, loading} = this.props;
+
+        if (loading) {
+            return <Spinner/>
+        }
 
         return (
             <ul className='list-group books-list'>
@@ -38,13 +42,14 @@ class BookList extends Component {
     }
 }
 
-const mapStateToProps = ({books}) => {
-    return {books}
+const mapStateToProps = ({books, loading}) => {
+    return {books, loading}
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        booksLoaded
+        booksLoaded,
+        booksRequested
     }, dispatch)
 };
 
