@@ -4,22 +4,33 @@ import {bindActionCreators} from "redux";
 
 import BookListItem from "../BookListItem/BookListItem";
 import withBookStoreService from '../hoc/withBookStoreService';
-import {booksLoaded, booksRequested} from "../../actions";
+import {booksLoaded, booksRequested, booksError} from "../../actions";
 import compose from "../../utils/compose";
 import Spinner from "../Spinner/Spinner";
+import ErrorIndicator from "../ErrorIndicator/ErrorIndicator";
 
 class BookList extends Component {
 
     componentDidMount() {
 
-        const {bookStoreService, booksLoaded, booksRequested} = this.props;
+        const {
+            bookStoreService,
+            booksLoaded,
+            booksRequested,
+            booksError
+        } = this.props;
         booksRequested();
         bookStoreService.getBooks()
-            .then((data) => booksLoaded(data));
+            .then((data) => booksLoaded(data))
+            .catch((err) => booksError(err));
     }
 
     render() {
-        const {books, loading} = this.props;
+        const {books, loading, error} = this.props;
+
+        if (error) {
+            return <ErrorIndicator/>
+        }
 
         if (loading) {
             return <Spinner/>
@@ -42,14 +53,15 @@ class BookList extends Component {
     }
 }
 
-const mapStateToProps = ({books, loading}) => {
-    return {books, loading}
+const mapStateToProps = ({books, loading, error}) => {
+    return {books, loading, error}
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         booksLoaded,
-        booksRequested
+        booksRequested,
+        booksError
     }, dispatch)
 };
 

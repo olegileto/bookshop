@@ -24,7 +24,7 @@ export class BookStoreService {
     ];
 
     getBooks() {
-        return new Promise((resolve => {
+        return new Promise(((resolve) => {
             setTimeout(() => {
                 resolve(this.data);
             }, 700)
