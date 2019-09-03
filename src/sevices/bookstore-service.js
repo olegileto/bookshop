@@ -1,5 +1,5 @@
 export class BookStoreService {
-    data =  [
+    data = [
         {
             id: 1,
             title: 'Story of my life',
