@@ -1,6 +1,6 @@
 import React from 'react';
 
-import BookList from "../BookList/BookList";
+import BookList from "../BookList/BookListContainer";
 
 export const BooksPage = () => {
     return (
@@ -25,11 +25,15 @@ export const BooksPage = () => {
                     <td>40$</td>
                     <td>
                         <button className='btn btn-outline-primary btn-style'>
-                            ADD
+                            PLUS
+                        </button>
+                        <button className='btn btn-outline-primary btn-style'>
+                            MINUS
                         </button>
                         <button className='btn btn-outline-primary btn-style'>
                             DELETE
                         </button>
+
                     </td>
                 </tr>
                 </tbody>
