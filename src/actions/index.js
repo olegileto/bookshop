@@ -39,7 +39,14 @@ const allBooksRemovedFromCart = (bookId) => {
     }
 };
 
-const  fetchBooks = (bookStoreService, dispatch) => () => {
+const closedAlert = (alert) => {
+    return {
+        type: 'CLOSED_ALERT',
+        payload: alert
+    }
+};
+
+const fetchBooks = (bookStoreService, dispatch) => () => {
     dispatch(booksRequested());
     bookStoreService.getBooks()
         .then((data) => dispatch(booksLoaded(data)))
@@ -50,5 +57,6 @@ export {
     fetchBooks,
     bookAddedToCart,
     bookRemovedFromCart,
-    allBooksRemovedFromCart
+    allBooksRemovedFromCart,
+    closedAlert
 }

@@ -65,3 +65,17 @@ header {
     color: #fff;
     opacity: .8;
 }
+
+.BooksPage {
+    top: 0;
+    right: 0;
+    position: relative;
+}
+
+.SuccessAlert {
+    position: absolute;
+    top: 50%;
+    left: 25%;
+    width: 50%;
+
+}

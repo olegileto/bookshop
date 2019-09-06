@@ -36,7 +36,7 @@ const updateCartItem = (book, item = {}, quantity) => {
     }
 };
 
-const updateOrder = (state, bookId, quantity) => {
+const updateOrder = (state, bookId, quantity, alertFlag) => {
     const {bookList: {books}, shoppingCart: {cartItems}} = state;
 
     const book = books.find((book) => book.id === bookId);
@@ -47,7 +47,8 @@ const updateOrder = (state, bookId, quantity) => {
 
     return {
         orderTotal: 0,
-        cartItems: updateCartItems(cartItems, newItem, itemIndex)
+        cartItems: updateCartItems(cartItems, newItem, itemIndex),
+        alert: alertFlag
     };
 };
 
@@ -55,13 +56,14 @@ const updateShoppingCart = (state, action) => {
     if (state === undefined) {
         return {
             cartItems: [],
-            orderTotal: 0
+            orderTotal: 0,
+            alert: false
         }
     }
 
     switch (action.type) {
         case 'BOOK_ADDED_TO_CART':
-            return updateOrder(state, action.payload, 1);
+            return updateOrder(state, action.payload, 1, true);
 
         case 'BOOK_REMOVED_FROM_CART':
             return updateOrder(state, action.payload, -1);
@@ -69,6 +71,11 @@ const updateShoppingCart = (state, action) => {
         case 'ALL_BOOKS_REMOVED_FROM_CART':
             const item = state.shoppingCart.cartItems.find(({id}) => id === action.payload);
             return updateOrder(state, action.payload, -item.count);
+
+        case 'CLOSED_ALERT':
+            return {
+                ...state.shoppingCart, alert: action.payload
+            };
 
         default:
             return state.shoppingCart;
